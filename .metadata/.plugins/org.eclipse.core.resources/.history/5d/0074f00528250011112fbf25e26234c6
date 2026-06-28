@@ -1,0 +1,77 @@
+package com.superflick.modules.job;
+
+import com.superflick.modules.hr.entity.HRProfile;
+import com.superflick.modules.hr.repository.HRRepository;
+import com.superflick.modules.job.dto.JobRequest;
+import com.superflick.modules.job.dto.JobResponse;
+import com.superflick.modules.job.entity.Job;
+import com.superflick.modules.job.entity.JobSkill;
+import com.superflick.modules.job.mapper.JobMapper;
+import com.superflick.modules.job.repository.JobRepository;
+import com.superflick.modules.skill.repository.SkillRepository;
+import com.superflick.modules.user.entity.User;
+import com.superflick.shared.enums.JobStatus;
+import com.superflick.shared.exception.ForbiddenException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class JobService {
+
+    private final JobRepository jobRepo;
+    private final HRRepository hrRepo;
+    private final SkillRepository skillRepo;
+
+    public JobResponse postJob(User user, JobRequest req) {
+        HRProfile hr = hrRepo.findByUserId(user.getId()).orElseThrow();
+        Job job = Job.builder()
+                .hr(hr)
+                .company(hr.getCompany())
+                .title(req.getTitle())
+                .description(req.getDescription())
+                .location(req.getLocation())
+                .ctcMin(req.getCtcMin())
+                .ctcMax(req.getCtcMax())
+                .experienceRequired(req.getExperienceRequired())
+                .shiftTimings(req.getShiftTimings())
+                .status(JobStatus.ACTIVE)
+                .isBoosted(false)
+                .build();
+
+        List<JobSkill> jobSkills = req.getSkillIds().stream()
+                .map(skillId -> JobSkill.builder()
+                        .job(job)
+                        .skill(skillRepo.findById(UUID.fromString(skillId)).orElseThrow())
+                        .isRequired(true)
+                        .build())
+                .collect(Collectors.toList());
+        job.setSkills(jobSkills);
+
+        return JobMapper.toResponse(jobRepo.save(job));
+    }
+
+    public void boostJob(UUID jobId) {
+        Job job = jobRepo.findById(jobId).orElseThrow();
+        job.setBoosted(true);
+        jobRepo.save(job);
+    }
+
+    public List<JobResponse> getJobsByHR(UUID userId) {
+        HRProfile hr = hrRepo.findByUserId(userId).orElseThrow();
+        return jobRepo.findByHr(hr).stream().map(JobMapper::toResponse).collect(Collectors.toList());
+    }
+
+    public void deleteJob(User user, UUID jobId) {
+        Job job = jobRepo.findById(jobId).orElseThrow();
+        if (!job.getHr().getUser().getId().equals(user.getId()))
+            throw new ForbiddenException("Not your job");
+        jobRepo.delete(job);
+    }
+}

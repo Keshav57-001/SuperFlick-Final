@@ -1,0 +1,29 @@
+package com.superflick.modules.payment.repository;
+
+import com.superflick.modules.payment.entity.Payment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+public interface PaymentRepository extends JpaRepository<Payment, UUID> {
+
+    List<Payment> findByUserIdOrderByCreatedAtDesc(UUID userId);
+
+    Optional<Payment> findByGatewayOrderId(String gatewayOrderId);
+
+    Page<Payment> findAllByOrderByCreatedAtDesc(Pageable pageable);
+
+    @Query("SELECT COALESCE(SUM(p.amount), 0) FROM Payment p WHERE p.status = 'SUCCESS'")
+    BigDecimal sumSuccessfulPayments();
+
+    @Query("SELECT COALESCE(SUM(p.amount), 0) FROM Payment p " +
+            "WHERE p.status = 'SUCCESS' AND CAST(p.gateway AS string) = :gateway")
+    BigDecimal sumByGateway(@Param("gateway") String gateway);
+}

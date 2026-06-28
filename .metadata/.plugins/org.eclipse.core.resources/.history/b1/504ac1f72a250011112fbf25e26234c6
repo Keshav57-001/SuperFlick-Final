@@ -1,0 +1,43 @@
+package com.superflick.modules.subscription;
+
+import com.superflick.modules.subscription.dto.SubscriptionResponse;
+import com.superflick.modules.user.entity.User;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/v1/subscriptions")
+@RequiredArgsConstructor
+@Tag(name = "Subscriptions", description = "Premium subscription status")
+public class SubscriptionController {
+
+    private final SubscriptionService subscriptionService;
+
+    /**
+     * GET /api/v1/subscriptions/me
+     * Returns the current user's active subscription (or null if not subscribed).
+     * Used by the frontend to gate premium features.
+     */
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Get my subscription status")
+    public ResponseEntity<SubscriptionResponse> getMySubscription(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(subscriptionService.getActiveSubscription(user.getId()));
+    }
+
+    /**
+     * GET /api/v1/subscriptions/me/is-premium
+     * Lightweight boolean check. Faster than fetching the full subscription.
+     */
+    @GetMapping("/me/is-premium")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Check if current user is premium")
+    public ResponseEntity<Boolean> isPremium(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(subscriptionService.isPremiumActive(user.getId()));
+    }
+}

@@ -1,0 +1,150 @@
+package com.superflick.modules.swipe;
+
+import com.superflick.modules.application.entity.Application;
+import com.superflick.modules.application.repository.ApplicationRepository;
+import com.superflick.modules.candidate.dto.CandidateProfileResponse;
+import com.superflick.modules.candidate.mapper.CandidateProfileMapper;
+import com.superflick.modules.candidate.repository.CandidateRepository;
+import com.superflick.modules.job.repository.JobRepository;
+import com.superflick.modules.match.MatchService;
+import com.superflick.modules.notification.NotificationService;
+import com.superflick.modules.swipe.dto.SwipeRequest;
+import com.superflick.modules.swipe.dto.SwipeResponse;
+import com.superflick.modules.swipe.entity.SwipeAction;
+import com.superflick.modules.swipe.repository.SwipeRepository;
+import com.superflick.modules.application.dto.ApplicationResponse;
+import com.superflick.modules.application.mapper.ApplicationMapper;
+import com.superflick.modules.user.entity.User;               // ← correct import
+import com.superflick.shared.enums.ApplyType;
+import com.superflick.shared.enums.ApplicationStage;
+import com.superflick.shared.enums.SwipeActionType;
+import com.superflick.shared.enums.UserRole;
+import com.superflick.shared.exception.ConflictException;
+import com.superflick.shared.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+import java.util.UUID;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class SwipeService {
+
+    private final SwipeRepository        swipeRepo;
+    private final ApplicationRepository  applicationRepo;
+    private final CandidateRepository    candidateRepo;
+    private final JobRepository          jobRepo;
+    private final MatchService           matchService;
+    private final NotificationService    notificationService;
+    private final ApplicationMapper      applicationMapper;
+    private final CandidateProfileMapper candidateMapper;
+
+    /**
+     * Records a swipe action (APPLY or IGNORE).
+     * If action=APPLY and the other side has also swiped APPLY,
+     * a Match record is created and matched=true is returned.
+     */
+    public SwipeResponse recordSwipe(User user, SwipeRequest req) {
+        // Parse enums — throws BadRequestException on invalid values via exception handler
+        SwipeActionType actionType = SwipeActionType.valueOf(req.getAction().toUpperCase());
+        String targetType          = req.getTargetType().toUpperCase();
+
+        // Prevent duplicate swipes on the same target
+        if (swipeRepo.existsByActorIdAndTargetId(user.getId(), req.getTargetId())) {
+            throw new ConflictException("You have already swiped on this.");
+        }
+
+        // Persist swipe record
+        SwipeAction swipe = SwipeAction.builder()
+                .actor(user)
+                .targetId(req.getTargetId())
+                .targetType(targetType)
+                .action(actionType)
+                .build();
+        swipeRepo.save(swipe);
+
+        boolean matched = false;
+        UUID    matchId = null;
+
+        if (actionType == SwipeActionType.APPLY) {
+            if ("JOB".equals(targetType) && user.getRole() == UserRole.CANDIDATE) {
+                matched = handleCandidateApply(user, req.getTargetId());
+                if (matched) {
+                    // Retrieve match ID for frontend redirect to chat
+                    matchId = matchService.getLatestMatchId(user.getId());
+                }
+            } else if ("CANDIDATE".equals(targetType) && user.getRole() == UserRole.HR) {
+                matched = handleHRConsider(user, req.getTargetId());
+                if (matched) {
+                    matchId = matchService.getLatestMatchId(req.getTargetId());
+                }
+            }
+        }
+
+        return SwipeResponse.builder()
+                .action(actionType.name())
+                .matched(matched)
+                .matchId(matchId)
+                .build();
+    }
+
+    private boolean handleCandidateApply(User user, UUID jobId) {
+        var job = jobRepo.findById(jobId)
+                .orElseThrow(() -> new NotFoundException("Job not found"));
+
+        var candidate = candidateRepo.findByUserId(user.getId())
+                .orElseThrow(() -> new NotFoundException("Candidate profile not found"));
+
+        // Create application record
+        if (!applicationRepo.existsByCandidateAndJob(candidate, job)) {
+            Application app = Application.builder()
+                    .candidate(candidate)
+                    .job(job)
+                    .applyType(ApplyType.MANUAL)
+                    .stage(ApplicationStage.APPLIED)
+                    .build();
+            applicationRepo.save(app);
+        }
+
+        // Check if HR has already considered this candidate
+        return matchService.checkAndCreateMatch(
+                user.getId(), job.getHr().getUser().getId(), jobId);
+    }
+
+    private boolean handleHRConsider(User hrUser, UUID candidateUserId) {
+        return matchService.checkAndCreateMatchForHR(hrUser.getId(), candidateUserId);
+    }
+
+    // ── Read endpoints ────────────────────────────────────────
+
+    @Transactional(readOnly = true)
+    public Page<ApplicationResponse> getAppliedJobs(UUID userId, Pageable pageable) {
+        var candidate = candidateRepo.findByUserId(userId)
+                .orElseThrow(() -> new NotFoundException("Candidate profile not found"));
+        return applicationRepo.findByCandidate(candidate, pageable)
+                .map(applicationMapper::toResponse);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<CandidateProfileResponse> getConsideredCandidates(UUID hrUserId, Pageable pageable) {
+        var consideredIds = swipeRepo.findConsideredCandidateIdsByHR(hrUserId);
+        return candidateRepo.findByUserIds(consideredIds, pageable)
+                .map(candidateMapper::toResponse);
+    }
+
+    @Transactional(readOnly = true)
+    public CandidateProfileResponse getNextCandidateForHR(UUID hrUserId, UUID jobId) {
+        var alreadySwiped = swipeRepo.findSwipedTargetIdsByActor(hrUserId);
+        var candidates    = candidateRepo.findFeedForHR(jobId, alreadySwiped,
+                org.springframework.data.domain.PageRequest.of(0, 1));
+        if (candidates.isEmpty()) throw new NotFoundException("No more candidates available");
+        return candidateMapper.toResponse(candidates.get(0));
+    }
+}

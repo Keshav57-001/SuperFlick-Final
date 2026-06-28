@@ -1,0 +1,57 @@
+package com.superflick.modules.admin;
+
+import com.superflick.modules.admin.dto.AdminStatsResponse;
+import com.superflick.modules.application.repository.ApplicationRepository;
+import com.superflick.modules.job.repository.JobRepository;
+import com.superflick.modules.payment.dto.PaymentResponse;
+import com.superflick.modules.payment.mapper.PaymentMapper;
+import com.superflick.modules.payment.repository.PaymentRepository;
+import com.superflick.modules.subscription.dto.SubscriptionResponse;
+import com.superflick.modules.subscription.mapper.SubscriptionMapper;
+import com.superflick.modules.subscription.repository.SubscriptionRepository;
+import com.superflick.modules.user.repository.UserRepository;
+import com.superflick.shared.enums.SubscriptionStatus;
+import com.superflick.shared.enums.UserRole;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+
+import java.awt.print.Pageable;
+
+@Service
+@RequiredArgsConstructor
+public class AdminService {
+
+    private final UserRepository userRepo;
+    private final SubscriptionRepository subscriptionRepo;
+    private final PaymentRepository paymentRepo;
+    private final ApplicationRepository applicationRepo;
+    private final JobRepository jobRepo;
+
+    public AdminStatsResponse getPlatformStats() {
+        return AdminStatsResponse.builder()
+                .totalUsers(userRepo.countByRole(UserRole.CANDIDATE))
+                .premiumUsers(subscriptionRepo.countActiveByUserRole(UserRole.CANDIDATE))
+                .premiumCompanies(subscriptionRepo.countActiveByUserRole(UserRole.HR))
+                .activeSubscriptions(subscriptionRepo.countByStatus(SubscriptionStatus.ACTIVE))
+                .totalJobsPosted(jobRepo.count())
+                .totalApplications(applicationRepo.count())
+                .totalRevenue(paymentRepo.sumSuccessfulPayments())
+                .build();
+    }
+
+    public Page<SubscriptionResponse> getUserSubscriptions(Pageable pageable) {
+        return subscriptionRepo.findByUserRole(UserRole.CANDIDATE, (org.springframework.data.domain.Pageable) pageable)
+                .map(SubscriptionMapper::toResponse);
+    }
+
+    public Page<SubscriptionResponse> getCompanySubscriptions(Pageable pageable) {
+        return subscriptionRepo.findByUserRole(UserRole.HR, (org.springframework.data.domain.Pageable) pageable)
+                .map(SubscriptionMapper::toResponse);
+    }
+
+    public Page<PaymentResponse> getAllPayments(Pageable pageable) {
+        return paymentRepo.findAllByOrderByCreatedAtDesc(pageable)
+                .map(PaymentMapper::toResponse);
+    }
+}

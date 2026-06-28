@@ -1,0 +1,60 @@
+package com.superflick.modules.swipe;
+
+import com.superflick.modules.application.dto.ApplicationResponse;
+import com.superflick.modules.candidate.dto.CandidateProfileResponse;
+import com.superflick.modules.swipe.dto.SwipeRequest;
+import com.superflick.modules.swipe.dto.SwipeResponse;
+import com.superflick.modules.user.entity.User;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.awt.print.Pageable;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/api/v1/swipe")
+@RequiredArgsConstructor
+@PreAuthorize("isAuthenticated()")
+public class SwipeController {
+
+    private final SwipeService swipeService;
+
+    @PostMapping
+    public ResponseEntity<SwipeResponse> swipe(@AuthenticationPrincipal User user,
+                                               @RequestBody @Valid SwipeRequest req) {
+        return ResponseEntity.ok(swipeService.recordSwipe(user, req));
+    }
+
+    // Candidate: my applied jobs
+    @GetMapping("/applied")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    public ResponseEntity<Page<ApplicationResponse>> getAppliedJobs(
+            @AuthenticationPrincipal User user,
+            @PageableDefault(size = 20) Pageable pageable) {
+        return ResponseEntity.ok(swipeService.getAppliedJobs(user.getId(), pageable));
+    }
+
+    // HR: swiped (considered) candidates
+    @GetMapping("/considered")
+    @PreAuthorize("hasRole('HR')")
+    public ResponseEntity<Page<CandidateProfileResponse>> getConsideredCandidates(
+            @AuthenticationPrincipal User user,
+            @PageableDefault(size = 20) Pageable pageable) {
+        return ResponseEntity.ok(swipeService.getConsideredCandidates(user.getId(), pageable));
+    }
+
+    // HR: next candidate card for flick mode
+    @GetMapping("/candidate/next")
+    @PreAuthorize("hasRole('HR')")
+    public ResponseEntity<CandidateProfileResponse> getNextCandidate(
+            @AuthenticationPrincipal User user,
+            @RequestParam(required = false) UUID jobId) {
+        return ResponseEntity.ok(swipeService.getNextCandidateForHR(user.getId(), jobId));
+    }
+}

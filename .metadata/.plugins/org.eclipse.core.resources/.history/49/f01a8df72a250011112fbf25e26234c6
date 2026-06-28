@@ -1,0 +1,47 @@
+package com.superflick.modules.chat;
+
+import com.superflick.modules.chat.ChatService;
+import com.superflick.modules.chat.dto.MessageResponse;
+import com.superflick.modules.match.dto.MatchWithLastMessageResponse;
+import com.superflick.modules.user.entity.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.awt.print.Pageable;
+import java.util.List;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/api/v1/chat")
+@RequiredArgsConstructor
+@PreAuthorize("isAuthenticated()")
+public class ChatController {
+
+    private final ChatService chatService;
+
+    @GetMapping("/matches")
+    public ResponseEntity<List<MatchWithLastMessageResponse>> getMyChats(
+            @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(chatService.getChatsForUser(user.getId()));
+    }
+
+    @GetMapping("/{matchId}/messages")
+    public ResponseEntity<Page<MessageResponse>> getMessages(
+            @AuthenticationPrincipal User user,
+            @PathVariable UUID matchId,
+            @PageableDefault(size = 50) Pageable pageable) {
+        return ResponseEntity.ok(chatService.getMessages(user.getId(), matchId, pageable));
+    }
+
+    @PostMapping("/{matchId}/read")
+    public ResponseEntity<Void> markRead(@AuthenticationPrincipal User user,
+                                         @PathVariable UUID matchId) {
+        chatService.markAllRead(user.getId(), matchId);
+        return ResponseEntity.ok().build();
+    }
+}

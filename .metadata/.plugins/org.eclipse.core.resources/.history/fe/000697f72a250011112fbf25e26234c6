@@ -1,0 +1,60 @@
+package com.superflick.modules.auth;
+
+import com.superflick.modules.auth.dto.AuthResponse;
+import com.superflick.modules.auth.dto.LoginRequest;
+import com.superflick.modules.auth.dto.OtpVerifyRequest;
+import com.superflick.modules.auth.dto.RegisterRequest;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/v1/auth")
+@RequiredArgsConstructor
+public class AuthController {
+
+    private final AuthService authService;
+
+    @PostMapping("/register/email")
+    public ResponseEntity<String> registerWithEmail(@RequestBody @Valid RegisterRequest req) {
+        authService.registerWithEmail(req);
+        return ResponseEntity.ok("OTP sent to " + req.getEmail());
+    }
+
+    @PostMapping("/register/mobile")
+    public ResponseEntity<String> registerWithMobile(@RequestBody @Valid RegisterRequest req) {
+        authService.registerWithMobile(req);
+        return ResponseEntity.ok("OTP sent to " + req.getMobile());
+    }
+
+    @PostMapping("/otp/verify")
+    public ResponseEntity<AuthResponse> verifyOtp(@RequestBody @Valid OtpVerifyRequest req) {
+        return ResponseEntity.ok(authService.verifyOtpAndRegister(req));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest req) {
+        return ResponseEntity.ok(authService.login(req));
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+        authService.sendPasswordResetOtp(email);
+        return ResponseEntity.ok("OTP sent");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody @Valid OtpVerifyRequest req) {
+        authService.resetPassword(req);
+        return ResponseEntity.ok("Password updated");
+    }
+
+    // OAuth callback - frontend sends back the code, we exchange it
+    @PostMapping("/oauth/callback")
+    public ResponseEntity<AuthResponse> oauthCallback(
+            @RequestParam String provider,
+            @RequestParam String code) {
+        return ResponseEntity.ok(authService.handleOAuthLogin(provider, code));
+    }
+}

@@ -1,0 +1,65 @@
+package com.superflick.modules.skill;
+
+import com.superflick.modules.skill.dto.SkillResponse;
+import com.superflick.modules.skill.entity.Skill;
+import com.superflick.modules.skill.repository.SkillRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class SkillService {
+
+    private final SkillRepository skillRepo;
+
+    /**
+     * Returns all skills sorted alphabetically.
+     * Cached — skills rarely change, so we avoid DB round-trips on every
+     * registration page load.
+     */
+    @Cacheable("skills-all")
+    public List<SkillResponse> getAllSkills() {
+        return skillRepo.findAllByOrderByNameAsc()
+                .stream().map(this::toResponse).toList();
+    }
+
+    /**
+     * Returns all skills in a given category, sorted alphabetically.
+     * Cached per category.
+     */
+    @Cacheable(value = "skills-by-category", key = "#category")
+    public List<SkillResponse> getByCategory(String category) {
+        return skillRepo.findByCategoryIgnoreCaseOrderByNameAsc(category)
+                .stream().map(this::toResponse).toList();
+    }
+
+    /**
+     * Searches skill names using a case-insensitive LIKE query.
+     * Returns up to 20 results ordered by relevance (exact match first).
+     */
+    public List<SkillResponse> search(String query) {
+        return skillRepo.searchByName(query.trim())
+                .stream().limit(20).map(this::toResponse).toList();
+    }
+
+    /**
+     * Returns all distinct category names, sorted alphabetically.
+     * Used to build the category tab bar on the skill selector.
+     */
+    @Cacheable("skill-categories")
+    public List<String> getCategories() {
+        return skillRepo.findDistinctCategories();
+    }
+
+    private SkillResponse toResponse(Skill skill) {
+        return SkillResponse.builder()
+                .id(skill.getId())
+                .name(skill.getName())
+                .category(skill.getCategory())
+                .build();
+    }
+}

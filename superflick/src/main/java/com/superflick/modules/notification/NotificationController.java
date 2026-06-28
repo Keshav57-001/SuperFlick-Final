@@ -1,0 +1,56 @@
+package com.superflick.modules.notification;
+import com.superflick.modules.notification.dto.NotificationResponse;
+import com.superflick.modules.user.entity.User;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+import java.util.UUID;
+@RestController
+@RequestMapping("/api/v1/notifications")
+@Tag(name = "Notifications", description = "In-app notification management")
+public class NotificationController {
+    private final NotificationService notificationService;
+    // ✅ Explicit constructor injection used instead of Lombok configurations
+    public NotificationController(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+    /** GET /api/v1/notifications — paginated list, newest first. */
+    @GetMapping
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Get my notifications")
+    public ResponseEntity<Page<NotificationResponse>> getNotifications(
+            @AuthenticationPrincipal User user,
+            @PageableDefault(size = 20) Pageable pageable) {
+        return ResponseEntity.ok(notificationService.getForUser(user.getId(), pageable));
+    }
+    /** GET /api/v1/notifications/unread-count */
+    @GetMapping("/unread-count")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Get unread notification count")
+    public ResponseEntity<Long> getUnreadCount(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(notificationService.getUnreadCount(user.getId()));
+    }
+    /** POST /api/v1/notifications/{id}/read */
+    @PostMapping("/{id}/read")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Mark a single notification as read")
+    public ResponseEntity<Void> markRead(@AuthenticationPrincipal User user,
+                                         @PathVariable UUID id) {
+        notificationService.markRead(user.getId(), id);
+        return ResponseEntity.ok().build();
+    }
+    /** POST /api/v1/notifications/read-all */
+    @PostMapping("/read-all")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Mark all notifications as read")
+    public ResponseEntity<Void> markAllRead(@AuthenticationPrincipal User user) {
+        notificationService.markAllRead(user.getId());
+        return ResponseEntity.ok().build();
+    }
+}

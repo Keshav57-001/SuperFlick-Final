@@ -1,0 +1,1070 @@
+!SESSION 2026-03-21 01:05:02.157 -----------------------------------------------
+eclipse.buildId=4.39.0.20260305-0817
+java.version=21.0.10
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY com.microsoft.copilot.eclipse.ui.terminal 4 0 2026-03-21 01:05:03.792
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: com.microsoft.copilot.eclipse.ui.terminal [1697]
+  Unresolved requirement: Require-Bundle: org.eclipse.terminal.view.core
+  Unresolved requirement: Require-Bundle: com.microsoft.copilot.eclipse.terminal.api; bundle-version="0.11.0"
+    -> Bundle-SymbolicName: com.microsoft.copilot.eclipse.terminal.api; bundle-version="0.11.0.202508291001"; singleton:="true"
+       com.microsoft.copilot.eclipse.terminal.api [1305]
+         Unresolved requirement: Require-Bundle: org.eclipse.ui; bundle-version="3.205.100"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:495)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2110)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:146)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2101)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2041)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:2003)
+	at org.eclipse.osgi.container.SystemModule.startWorker(SystemModule.java:274)
+	at org.eclipse.osgi.container.Module.doStart(Module.java:643)
+	at org.eclipse.osgi.container.Module.start(Module.java:500)
+	at org.eclipse.osgi.container.SystemModule.start(SystemModule.java:198)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.start(EquinoxBundle.java:471)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.start(EquinoxBundle.java:490)
+	at org.eclipse.osgi.launch.Equinox.start(Equinox.java:139)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.startup(EclipseStarter.java:394)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:294)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1387)
+
+!ENTRY ch.qos.logback.classic 1 0 2026-03-21 01:05:14.799
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-03-21 01:06:30.561
+!MESSAGE Logback config file: /home/madmax/Music/PROJECT/superflick-springboot/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.101.20251017-1242.xml
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 01:07:33.008
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 01:07:33.009
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 01:07:33.010
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 01:07:33.011
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 01:07:37.077
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 01:07:37.077
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 01:07:37.078
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 01:07:37.078
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:50:36.265
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:50:36.265
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:50:36.265
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:50:36.265
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:50:37.409
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:50:37.409
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:50:37.409
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:50:37.409
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+!SESSION 2026-03-21 05:51:24.948 -----------------------------------------------
+eclipse.buildId=4.39.0.20260305-0817
+java.version=21.0.10
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product -data file:/home/madmax/Music/PROJECT/superflick-springboot/
+
+!ENTRY ch.qos.logback.classic 1 0 2026-03-21 05:51:29.514
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-03-21 05:51:37.010
+!MESSAGE Logback config file: /home/madmax/Music/PROJECT/superflick-springboot/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.101.20251017-1242.xml
+
+!ENTRY org.eclipse.ui.workbench.texteditor 4 0 2026-03-21 05:51:38.386
+!MESSAGE The 'org.eclipse.jst.jsf.ui.elhyperlinkdetector' extension from plug-in 'org.eclipse.jst.jsf.ui' to the 'org.eclipse.ui.workbench.texteditor.hyperlinkDetectors' extension point will be ignored because it contains invalid attributes.
+
+!ENTRY org.eclipse.jface 2 0 2026-03-21 05:51:39.148
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2026-03-21 05:51:39.148
+!MESSAGE A conflict occurred for ALT+CTRL+T:
+Binding(ALT+CTRL+T,
+	ParameterizedCommand(Command(org.eclipse.terminal.connector.local.command.launch,Open Local Terminal on Selection,
+		,
+		Category(org.eclipse.terminal.view.ui.commands.category,Terminal Commands,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.terminal.connector.local.command.launch"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+CTRL+T,
+	ParameterizedCommand(Command(pl.szpinda.plugin.tomcat.commands.tomcatStartStop,Tomcat start,stop,
+		,
+		Category(pl.szpinda.plugin.tomcat.commands.category.key,Tomcat keys,null,true),
+		WorkbenchHandlerServiceHandler("pl.szpinda.plugin.tomcat.commands.tomcatStartStop"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 05:51:42.213
+!MESSAGE [Info] Starting language server with binary lsp agent.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 05:51:42.218
+!MESSAGE [Info] Found native binary in fragment bundle: com.microsoft.copilot.eclipse.core.agent.linux.x64
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 05:51:42.919
+!MESSAGE [Info] Lsp agent started successfully.
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 05:51:45.154
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[lsp] GitHub Copilot Language Server 1.363.0 initialized
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 05:51:45.485
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[certificates] Removed 3 expired certificates
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:53:10.600
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:53:10.600
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:53:10.600
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:53:10.601
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:53:12.196
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:53:12.197
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:53:12.197
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:53:12.197
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:53:20.300
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:53:20.300
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:53:20.300
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:53:20.300
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:55:02.951
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:55:02.952
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:55:02.952
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 05:55:02.952
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 05:55:04.609
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[default] Context provider relatedFilesShim exceeded time budget of 150ms
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 06:18:01.551
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 06:18:01.551
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 06:18:01.551
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 06:18:01.552
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 06:18:52.856
+!MESSAGE [Info] Document is null for editor: SubscriptionNotificationService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 06:18:52.857
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/superflick-backend/SuperFlickBackend/src/main/java/com/superflick/service/Subscription/SubscriptionNotificationService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 06:18:52.891
+!MESSAGE [Info] Document is null for editor: UserCleanupService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 06:18:52.892
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/superflick-backend/SuperFlickBackend/src/main/java/com/superflick/service/Cleanup/UserCleanupService.java
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 06:19:17.691
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 06:19:17.691
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 06:19:17.692
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 06:19:17.692
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 06:19:19.256
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 06:19:19.257
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 06:19:19.257
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 06:19:19.257
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2026-03-21 06:19:42.334
+!MESSAGE Could not download sources for org.webjars:swagger-ui:5.10.3
+!STACK 1
+org.eclipse.core.runtime.CoreException: Could not resolve artifact org.webjars:swagger-ui:jar:sources:5.10.3
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl.lambda$7(MavenImpl.java:581)
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.executeBare(MavenExecutionContext.java:462)
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:295)
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:281)
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl.resolve(MavenImpl.java:550)
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl.resolve(MavenImpl.java:535)
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.download(DownloadSourcesJob.java:308)
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.downloadAttachments(DownloadSourcesJob.java:282)
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.downloadMaven(DownloadSourcesJob.java:252)
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.downloadFilesAndPopulateToUpdate(DownloadSourcesJob.java:220)
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.lambda$0(DownloadSourcesJob.java:149)
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.executeBare(MavenExecutionContext.java:462)
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:342)
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:281)
+	at org.eclipse.m2e.core.embedder.IMaven.execute(IMaven.java:300)
+	at org.eclipse.m2e.jdt.internal.DownloadSourcesJob.run(DownloadSourcesJob.java:149)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Contains: Missing org.webjars:swagger-ui:jar:sources:5.10.3
+!SUBENTRY 1 org.eclipse.m2e.core 4 -1 2026-03-21 06:19:42.335
+!MESSAGE Could not resolve artifact org.webjars:swagger-ui:jar:sources:5.10.3
+!SUBENTRY 2 org.eclipse.m2e.core 4 0 2026-03-21 06:19:42.335
+!MESSAGE Missing org.webjars:swagger-ui:jar:sources:5.10.3
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:25:40.407
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:25:40.408
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:25:40.408
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:25:40.409
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:25:49.961
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:25:49.962
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:25:49.962
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:25:49.962
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:26:14.521
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:26:14.522
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:26:14.522
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:26:14.522
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:30:14.146
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[default] Context provider relatedFilesShim exceeded time budget of 150ms
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:34:49.419
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:34:49.419
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:34:49.420
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:34:49.420
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:35:22.909
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:35:22.910
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:35:22.910
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:35:22.910
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:39:38.968
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:39:38.968
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:39:38.969
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:39:38.969
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:40:19.114
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:40:19.115
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:40:19.115
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:40:19.115
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:40:19.405
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 36f5b4fa-ec3a-4bd1-a5e9-805157007114 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 1544.0365290008485ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:40:19.556
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:40:20.080
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 7cf828d1-bb29-49bb-9674-bdf7a1c55ce3 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 496.27180000022054ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:40:20.080
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:40:32.754
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:40:32.754
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:40:32.754
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:40:32.755
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:43:49.443
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request a2317af6-6c3a-4f56-86ef-4e28c8b660f8 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 1545.6276859994978ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:43:49.566
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:44:00.989
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request d5b9398f-4187-431f-886b-19b0397bdd24 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 725.3474650010467ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:44:01.088
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:44:14.963
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 866faf5e-77e9-4f79-8d54-5f39d3e85aea at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 600.119900001213ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:44:15.118
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:45:25.588
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:45:25.589
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:45:25.589
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:45:25.589
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:45:26.288
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 1c11e448-b39f-4b4f-8a11-32a091b6c612 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 789.5133309997618ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:45:26.289
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:45:26.901
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 96105017-1203-4e83-9318-b88738cfc632 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 595.308938998729ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:45:26.901
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:46:23.844
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:46:23.844
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:46:23.845
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:46:23.845
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:47:36.290
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 1b118344-f3a4-4bb2-b005-51c404ad5c54 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 2709.765092998743ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:47:36.312
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:49:15.718
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:49:15.719
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:49:15.719
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:49:15.719
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 18:50:10.098
+!MESSAGE [Info] Completion request timed out after 5000 milliseconds
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:50:12.507
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 385d77d2-662a-46d0-81dc-8e52b815053b at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> rejected with FetchError: Stream closed with error code NGHTTP2_REFUSED_STREAM after 7385.177667001262ms
+
+!ENTRY org.eclipse.lsp4e 4 0 2026-03-21 18:50:12.507
+!MESSAGE [LS:GitHub Copilot Language Server][Error]	[ghostText] Error on ghost text request: FetchError: Stream closed with error code NGHTTP2_REFUSED_STREAM
+    at fetch (/snapshot/copilot-client/node_modules/@adobe/helix-fetch/src/fetch/index.js:99:11)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at cachingFetch (/snapshot/copilot-client/node_modules/@adobe/helix-fetch/src/fetch/index.js:288:16)
+    at kM.fetch (/snapshot/copilot-client/lib/src/network/helix.ts:78:22)
+    at c7.fetchWithParameters (/snapshot/copilot-client/lib/src/openai/fetch.ts:871:26)
+    at c7.fetchAndStreamCompletions (/snapshot/copilot-client/lib/src/openai/fetch.ts:583:26)
+    at genericGetCompletionsFromNetwork (/snapshot/copilot-client/lib/src/ghostText/ghostText.ts:171:21) {
+  type: 'system',
+  _name: 'FetchError',
+  code: 'ERR_HTTP2_STREAM_ERROR',
+  errno: undefined,
+  erroredSysCall: undefined
+}
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:50:14.956
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 8d324d3b-783f-4927-9e05-462ac8d648a3 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 1655.373273998499ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:50:14.956
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:50:18.876
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 14e8847b-b7d8-4763-bb11-1574682fa3bc at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 799.493238998577ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 18:50:19.033
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:50:20.324
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:50:20.324
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:50:20.325
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:50:20.325
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:51:22.715
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:51:22.715
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:51:22.715
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:51:22.715
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:51:24.103
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:51:24.104
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:51:24.105
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:51:24.105
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:51:40.710
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:51:40.711
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:51:40.711
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 18:51:40.712
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:02:37.714
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request f9cdc184-20c3-43c5-9144-5eb5bb16a8d8 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 974.6913849990815ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:02:37.715
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:02:38.337
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request f13b14b8-cf62-459c-b62e-81d10cf78068 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 569.5637530013919ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:02:38.390
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:03:09.465
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 21c4f8e1-7e93-489e-b7c7-efe97f319e2e at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 643.1535480003804ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:03:09.466
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:03:22.044
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 422aa824-e728-42f5-9fa7-42689d5fd76b at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 574.1466239988804ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:03:22.044
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:03:44.075
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request d9dd7f65-7401-4383-82e3-0102bd8fd40f at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 704.9660000000149ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:03:44.177
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:03:44.793
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request e8e0230f-aa90-4b60-9450-9c4eba9b7e5e at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 598.510584000498ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:03:44.793
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:03:46.328
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 8ea95a5c-66c7-4063-b857-3ac54a2d8762 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 602.354135999456ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:03:46.430
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:04:15.420
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 208b2b02-fe6d-427a-b920-50fab5477f29 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 839.7245189994574ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:04:15.513
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:05:14.289
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[fetchCompletions] Request 604a3172-8863-423a-8004-25415c278cd0 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 715.3721099998802ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-03-21 19:05:14.290
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 19:05:15.712
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 19:05:15.713
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 19:05:15.713
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 19:05:15.714
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 19:06:24.120
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 19:06:24.120
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 19:06:24.120
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 19:06:24.120
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 19:06:30.590
+!MESSAGE Plugin is modifying compileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 19:06:30.590
+!MESSAGE Plugin is modifying compileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addCompileSourceRoot()/removeCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 19:06:30.590
+!MESSAGE Plugin is modifying testCompileSourceRoots through clear(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-03-21 19:06:30.590
+!MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.542
+!MESSAGE [Info] Document is null for editor: SecurityConfig.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.542
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/config/SecurityConfig.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.575
+!MESSAGE [Info] Document is null for editor: AdminController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.575
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/admin/AdminController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.606
+!MESSAGE [Info] Document is null for editor: AdminService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.606
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/admin/AdminService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.647
+!MESSAGE [Info] Document is null for editor: PaymentRepository.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.647
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/payment/repository/PaymentRepository.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.676
+!MESSAGE [Info] Document is null for editor: AdminMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.676
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/admin/mapper/AdminMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.705
+!MESSAGE [Info] Document is null for editor: ResumeParserService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.705
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/ai/ResumeParserService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.731
+!MESSAGE [Info] Document is null for editor: ApplicationController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.731
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/application/ApplicationController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.760
+!MESSAGE [Info] Document is null for editor: ApplicationService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.760
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/application/ApplicationService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.787
+!MESSAGE [Info] Document is null for editor: ApplicationMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.787
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/application/mapper/ApplicationMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.810
+!MESSAGE [Info] Document is null for editor: AuthController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.810
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/auth/AuthController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.834
+!MESSAGE [Info] Document is null for editor: AuthService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.834
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/auth/AuthService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.861
+!MESSAGE [Info] Document is null for editor: JwtService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.862
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/auth/JwtService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.884
+!MESSAGE [Info] Document is null for editor: OtpService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.885
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/auth/OtpService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.908
+!MESSAGE [Info] Document is null for editor: JwtAuthFilter.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.909
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/auth/filter/JwtAuthFilter.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.930
+!MESSAGE [Info] Document is null for editor: GitHubOAuthProvider.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.930
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/auth/oauth/GitHubOAuthProvider.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.949
+!MESSAGE [Info] Document is null for editor: GoogleOAuthProvider.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.950
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/auth/oauth/GoogleOAuthProvider.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.970
+!MESSAGE [Info] Document is null for editor: LinkedInOAuthProvider.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.970
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/auth/oauth/LinkedInOAuthProvider.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.991
+!MESSAGE [Info] Document is null for editor: MicrosoftOAuthProvider.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:31.991
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/auth/oauth/MicrosoftOAuthProvider.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.010
+!MESSAGE [Info] Document is null for editor: OAuthProviderFactory.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.010
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/auth/oauth/OAuthProviderFactory.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.030
+!MESSAGE [Info] Document is null for editor: CandidateController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.030
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/candidate/CandidateController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.057
+!MESSAGE [Info] Document is null for editor: CandidateService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.057
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/candidate/CandidateService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.078
+!MESSAGE [Info] Document is null for editor: CandidateProfileMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.078
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/candidate/mapper/CandidateProfileMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.100
+!MESSAGE [Info] Document is null for editor: ChatController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.100
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/chat/ChatController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.119
+!MESSAGE [Info] Document is null for editor: ChatService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.119
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/chat/ChatService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.138
+!MESSAGE [Info] Document is null for editor: ChatWebSocketController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.138
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/chat/ChatWebSocketController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.158
+!MESSAGE [Info] Document is null for editor: MessageMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.158
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/chat/mapper/MessageMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.176
+!MESSAGE [Info] Document is null for editor: AutoApplyCronJob.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.176
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/cron/AutoApplyCronJob.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.200
+!MESSAGE [Info] Document is null for editor: SubscriptionExpiryCronJob.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.201
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/cron/SubscriptionExpiryCronJob.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.218
+!MESSAGE [Info] Document is null for editor: FileController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.218
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/file/FileController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.237
+!MESSAGE [Info] Document is null for editor: FileService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.237
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/file/FileService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.255
+!MESSAGE [Info] Document is null for editor: HRController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.256
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/hr/HRController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.276
+!MESSAGE [Info] Document is null for editor: HRService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.276
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/hr/HRService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.294
+!MESSAGE [Info] Document is null for editor: User.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.294
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/user/entity/User.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.311
+!MESSAGE [Info] Document is null for editor: CompanyMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.311
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/hr/mapper/CompanyMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.328
+!MESSAGE [Info] Document is null for editor: HRProfileMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.328
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/hr/mapper/HRProfileMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.346
+!MESSAGE [Info] Document is null for editor: JobController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.347
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/job/JobController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.365
+!MESSAGE [Info] Document is null for editor: JobFeedService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.365
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/job/JobFeedService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.384
+!MESSAGE [Info] Document is null for editor: JobService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.384
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/job/JobService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.403
+!MESSAGE [Info] Document is null for editor: JobMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.404
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/job/mapper/JobMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.424
+!MESSAGE [Info] Document is null for editor: MatchController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.424
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/match/MatchController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.441
+!MESSAGE [Info] Document is null for editor: MatchService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.441
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/match/MatchService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.458
+!MESSAGE [Info] Document is null for editor: MatchMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.458
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/match/mapper/MatchMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.474
+!MESSAGE [Info] Document is null for editor: MatchingEngine.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.475
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/matching/MatchingEngine.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.492
+!MESSAGE [Info] Document is null for editor: EmailService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.492
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/notification/EmailService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.508
+!MESSAGE [Info] Document is null for editor: NotificationController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.508
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/notification/NotificationController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.525
+!MESSAGE [Info] Document is null for editor: NotificationService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.525
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/notification/NotificationService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.543
+!MESSAGE [Info] Document is null for editor: SmsService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.544
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/notification/SmsService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.560
+!MESSAGE [Info] Document is null for editor: NotificationMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.560
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/notification/mapper/NotificationMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.575
+!MESSAGE [Info] Document is null for editor: PaymentController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.576
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/payment/PaymentController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.591
+!MESSAGE [Info] Document is null for editor: PaymentService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.591
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/payment/PaymentService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.612
+!MESSAGE [Info] Document is null for editor: WebhookPayload.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.612
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/payment/dto/WebhookPayload.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.627
+!MESSAGE [Info] Document is null for editor: RazorpayService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.627
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/payment/gateway/RazorpayService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.641
+!MESSAGE [Info] Document is null for editor: StripeService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.641
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/payment/gateway/StripeService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.655
+!MESSAGE [Info] Document is null for editor: PaymentMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.655
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/payment/mapper/PaymentMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.671
+!MESSAGE [Info] Document is null for editor: SkillController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.671
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/skill/SkillController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.684
+!MESSAGE [Info] Document is null for editor: SkillService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.684
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/skill/SkillService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.697
+!MESSAGE [Info] Document is null for editor: SubscriptionController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.698
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/subscription/SubscriptionController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.712
+!MESSAGE [Info] Document is null for editor: SubscriptionService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.712
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/subscription/SubscriptionService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.725
+!MESSAGE [Info] Document is null for editor: SubscriptionMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.726
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/subscription/mapper/SubscriptionMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.740
+!MESSAGE [Info] Document is null for editor: SuperAdminController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.741
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/superadmin/SuperAdminController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.755
+!MESSAGE [Info] Document is null for editor: SuperAdminService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.755
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/superadmin/SuperAdminService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.770
+!MESSAGE [Info] Document is null for editor: AuditLogMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.770
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/superadmin/mapper/AuditLogMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.784
+!MESSAGE [Info] Document is null for editor: SwipeController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.784
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/swipe/SwipeController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.798
+!MESSAGE [Info] Document is null for editor: SwipeService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.798
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/swipe/SwipeService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.811
+!MESSAGE [Info] Document is null for editor: SwipeMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.812
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/swipe/mapper/SwipeMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.824
+!MESSAGE [Info] Document is null for editor: UserController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.824
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/user/UserController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.837
+!MESSAGE [Info] Document is null for editor: UserService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.837
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/user/UserService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.851
+!MESSAGE [Info] Document is null for editor: AccountMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.851
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/user/mapper/AccountMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.863
+!MESSAGE [Info] Document is null for editor: UserMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.863
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/user/mapper/UserMapper.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.874
+!MESSAGE [Info] Document is null for editor: GlobalExceptionHandler.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.874
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/shared/exception/GlobalExceptionHandler.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.887
+!MESSAGE [Info] Document is null for editor: ApiResponse.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.887
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/shared/response/ApiResponse.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.897
+!MESSAGE [Info] Document is null for editor: PageResponse.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.897
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/shared/response/PageResponse.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.908
+!MESSAGE [Info] Document is null for editor: SecurityUtils.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.908
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/shared/util/SecurityUtils.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.922
+!MESSAGE [Info] Document is null for editor: AIService.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-03-21 19:06:32.923
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///home/madmax/Music/PROJECT/superflick-springboot/superflick/src/main/java/com/superflick/modules/ai/AIService.java

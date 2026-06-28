@@ -1,0 +1,114 @@
+package com.superflick.modules.auth;
+
+import com.superflick.modules.auth.dto.AuthResponse;
+import com.superflick.modules.auth.dto.LoginRequest;
+import com.superflick.modules.auth.dto.OtpVerifyRequest;
+import com.superflick.modules.auth.dto.RegisterRequest;
+import com.superflick.modules.auth.oauth.OAuthProviderFactory;
+import com.superflick.modules.user.repository.UserRepository;
+import com.superflick.shared.enums.AccountStatus;
+import com.superflick.shared.enums.AuthProvider;
+import com.superflick.shared.exception.ConflictException;
+import com.superflick.shared.exception.ForbiddenException;
+import com.superflick.shared.exception.NotFoundException;
+import com.superflick.shared.exception.UnauthorizedException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class AuthService {
+
+    private final UserRepository userRepo;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final OtpService otpService;
+    private final OAuthProviderFactory oauthFactory;
+
+    public void registerWithEmail(RegisterRequest req) {
+        if (userRepo.existsByEmail(req.getEmail())) {
+            throw new ConflictException("Email already registered");
+        }
+        // Store temp data in Redis, send OTP
+        otpService.sendEmailOtp(req.getEmail(), req);
+    }
+
+    public void registerWithMobile(RegisterRequest req) {
+        if (userRepo.existsByPhone(req.getMobile())) {
+            throw new ConflictException("Mobile already registered");
+        }
+        otpService.sendSmsOtp(req.getMobile(), req);
+    }
+
+    public AuthResponse verifyOtpAndRegister(OtpVerifyRequest req) {
+        RegisterRequest pending = otpService.verifyAndFetch(req.getIdentifier(), req.getOtp());
+
+        User user = User.builder()
+                .email(pending.getEmail())
+                .phone(pending.getMobile())
+                .passwordHash(passwordEncoder.encode(pending.getPassword()))
+                .role(pending.getRole())
+                .authProvider(AuthProvider.EMAIL)
+                .status(AccountStatus.ACTIVE)
+                .build();
+        userRepo.save(user);
+
+        String token = jwtService.generateToken(user);
+        return new AuthResponse(token, user.getRole(), true); // true = needs profile setup
+    }
+
+    public AuthResponse login(LoginRequest req) {
+        User user = userRepo.findByEmailOrPhone(req.getIdentifier())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        if (user.getStatus() == AccountStatus.BLOCKED) {
+            throw new ForbiddenException("Your account has been blocked. Please contact support.");
+        }
+
+        if (!passwordEncoder.matches(req.getPassword(), user.getPasswordHash())) {
+            throw new UnauthorizedException("Invalid credentials");
+        }
+
+        String token = jwtService.generateToken(user);
+        return new AuthResponse(token, user.getRole(), false);
+    }
+
+    public AuthResponse handleOAuthLogin(String provider, String code) {
+        OAuthUserInfo info = oauthFactory.getProvider(provider).fetchUserInfo(code);
+
+        User user = userRepo.findByEmail(info.getEmail()).orElseGet(() -> {
+            User newUser = User.builder()
+                    .email(info.getEmail())
+                    .role(info.getRole())
+                    .authProvider(AuthProvider.valueOf(provider.toUpperCase()))
+                    .status(AccountStatus.ACTIVE)
+                    .build();
+            return userRepo.save(newUser);
+        });
+
+        if (user.getStatus() == AccountStatus.BLOCKED) {
+            throw new ForbiddenException("Your account has been blocked. Please contact support.");
+        }
+
+        boolean needsSetup = !user.isProfileComplete();
+        String token = jwtService.generateToken(user);
+        return new AuthResponse(token, user.getRole(), needsSetup);
+    }
+
+    public void sendPasswordResetOtp(String email) {
+        userRepo.findByEmail(email).orElseThrow(() -> new NotFoundException("Email not found"));
+        otpService.sendEmailOtp(email, null);
+    }
+
+    public void resetPassword(OtpVerifyRequest req) {
+        otpService.verifyRaw(req.getIdentifier(), req.getOtp());
+        User user = userRepo.findByEmail(req.getIdentifier())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        user.setPasswordHash(passwordEncoder.encode(req.getNewPassword()));
+        userRepo.save(user);
+    }
+}

@@ -1,0 +1,87 @@
+#spring:
+#  application:
+#    name: superflick-api
+#  profiles:
+#    active: dev
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/superflick
+#    username: postgres
+#    password: ${DB_PASSWORD}
+#    hikari:
+#      maximum-pool-size: 10
+#      minimum-idle: 2
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: false
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        format_sql: true
+#  data:
+#    redis:
+#      host: ${REDIS_HOST:localhost}
+#      port: ${REDIS_PORT:6379}
+#      password: ${REDIS_PASSWORD:}
+#  mail:
+#    host: smtp.sendgrid.net
+#    port: 587
+#    username: apikey
+#    password: ${SENDGRID_API_KEY}
+#    properties:
+#      mail.smtp.auth: true
+#      mail.smtp.starttls.enable: true
+#  servlet:
+#    multipart:
+#      max-file-size: 10MB
+#      max-request-size: 10MB
+#
+#server:
+#  port: 8080
+#  servlet:
+#    context-path: /
+#
+#app:
+#  jwt:
+#    secret: ${JWT_SECRET}
+#    expiry-ms: 86400000
+#  otp:
+#    ttl-seconds: 300
+#  aws:
+#    region: ap-south-1
+#    bucket: ${AWS_S3_BUCKET}
+#    access-key: ${AWS_ACCESS_KEY}
+#    secret-key: ${AWS_SECRET_KEY}
+#  razorpay:
+#    key-id: ${RAZORPAY_KEY_ID}
+#    key-secret: ${RAZORPAY_KEY_SECRET}
+#    webhook-secret: ${RAZORPAY_WEBHOOK_SECRET}
+#  openai:
+#    api-key: ${OPENAI_API_KEY}
+#  cors:
+#    allowed-origins: ${CORS_ORIGINS:http://localhost:3000}
+#
+#springdoc:
+#  api-docs:
+#    path: /api-docs
+#  swagger-ui:
+#    path: /swagger-ui.html
+## ── ADD THESE SECTIONS TO application.yml ──────────────────────
+#
+#app:
+#  sms:
+#    msg91:
+#      api-key: ${MSG91_API_KEY:}          # leave blank in dev — OTP is logged
+#      sender-id: SFLICK
+#      template-id: ${MSG91_TEMPLATE_ID:}
+#
+#  openapi:
+#    server-url: ${SERVER_URL:http://localhost:8080}
+#
+#  stripe:
+#    secret-key: ${STRIPE_SECRET_KEY:}
+#    webhook-secret: ${STRIPE_WEBHOOK_SECRET:}
+#
+#openai:
+#  api:
+#    key: ${OPENAI_API_KEY:}

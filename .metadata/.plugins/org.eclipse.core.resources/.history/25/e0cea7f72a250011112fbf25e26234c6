@@ -1,0 +1,208 @@
+package com.superflick.modules.candidate.mapper;
+
+import com.superflick.modules.candidate.dto.CandidateCardResponse;
+import com.superflick.modules.candidate.dto.CandidateProfileRequest;
+import com.superflick.modules.candidate.dto.CandidateProfileResponse;
+import com.superflick.modules.candidate.entity.CandidateProfile;
+import com.superflick.modules.candidate.entity.CandidateSkill;
+import com.superflick.modules.user.entity.User;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+public class CandidateProfileMapper {
+
+    // ── Entity → Full Profile Response ───────────────────────
+
+    /**
+     * Converts a CandidateProfile entity to CandidateProfileResponse.
+     * Used for the candidate's own profile view and admin lookups.
+     *
+     * @param profile the JPA entity (must be loaded within a transaction)
+     * @return populated CandidateProfileResponse DTO
+     */
+    public static CandidateProfileResponse toResponse(CandidateProfile profile) {
+        if (profile == null) return null;
+
+        User user = profile.getUser();
+
+        return CandidateProfileResponse.builder()
+                .id(profile.getId())
+                .userId(user != null ? user.getId() : null)
+                .fullName(profile.getFullName())
+                .email(user != null ? user.getEmail() : null)
+                .phone(user != null ? user.getPhone() : null)
+                .dob(profile.getDob() != null ? profile.getDob().toString() : null)
+                .gender(profile.getGender())
+                .currentLocation(profile.getCurrentLocation())
+                .preferredLocation(profile.getPreferredLocation())
+                .resumeUrl(profile.getResumeUrl())
+                .linkedinUrl(profile.getLinkedinUrl())
+                .githubUrl(profile.getGithubUrl())
+                .about(profile.getAbout())
+                // Employment
+                .isEmployed(profile.isEmployed())
+                .currentCompany(profile.getCurrentCompany())
+                .currentRole(profile.getCurrentRole())
+                .experienceYears(profile.getExperienceYears())
+                .experienceMonths(profile.getExperienceMonths())
+                .currentCtc(profile.getCurrentCtc())
+                .expectedCtc(profile.getExpectedCtc())
+                .noticePeriod(profile.getNoticePeriod())
+                // Fresher
+                .highestQualification(profile.getHighestQualification())
+                .fieldOfStudy(profile.getFieldOfStudy())
+                .collegeName(profile.getCollegeName())
+                .passingYear(profile.getPassingYear())
+                .internshipExperience(profile.getInternshipExperience())
+                .dreamCompany(profile.getDreamCompany())
+                // Preferences
+                .preferredJobTypes(profile.getPreferredJobTypes())
+                .preferredIndustry(profile.getPreferredIndustry())
+                .willingToRelocate(profile.isWillingToRelocate())
+                .preferredJobRole(profile.getPreferredJobRole())
+                // Skills
+                .skills(mapSkillTags(profile.getSkills()))
+                // Premium
+                .isPremium(profile.isPremium())
+                .premiumUntil(profile.getPremiumUntil())
+                .activityScore(profile.getActivityScore())
+                .createdAt(profile.getCreatedAt())
+                .updatedAt(profile.getUpdatedAt())
+                .build();
+    }
+
+    // ── Entity → Swipe Card Response ─────────────────────────
+
+    /**
+     * Converts a CandidateProfile to the lightweight CandidateCardResponse
+     * used in the HR swipe deck. Exposes only the fields shown on a card.
+     *
+     * @param profile  the entity
+     * @param matchScore optional AI match score for the current HR job context
+     * @return CandidateCardResponse DTO
+     */
+    public CandidateCardResponse toCardResponse(CandidateProfile profile, Double matchScore) {
+        if (profile == null) return null;
+
+        return CandidateCardResponse.builder()
+                .userId(profile.getUser() != null ? profile.getUser().getId() : null)
+                .candidateProfileId(profile.getId())
+                .fullName(profile.getFullName())
+                .currentRole(profile.getCurrentRole())
+                .currentCompany(profile.getCurrentCompany())
+                .experienceYears(profile.getExperienceYears())
+                .experienceMonths(profile.getExperienceMonths())
+                .experienceFormatted(formatExperience(profile.getExperienceYears(), profile.getExperienceMonths()))
+                .noticePeriod(profile.getNoticePeriod())
+                .willingToRelocate(profile.isWillingToRelocate())
+                .currentLocation(profile.getCurrentLocation())
+                .preferredLocation(profile.getPreferredLocation())
+                .expectedCtc(profile.getExpectedCtc())
+                // Show top 8 skills on the card
+                .skills(mapSkillTags(
+                        profile.getSkills() != null
+                                ? profile.getSkills().stream().limit(8).toList()
+                                : List.of()
+                ))
+                .resumeUrl(profile.getResumeUrl())
+                .about(profile.getAbout())
+                .isPremium(profile.isPremium())
+                .activityScore(profile.getActivityScore())
+                .matchScore(matchScore)
+                .build();
+    }
+
+    /**
+     * Convenience overload without matchScore — used when HR is browsing
+     * without a specific job context.
+     */
+    public CandidateCardResponse toCardResponse(CandidateProfile profile) {
+        return toCardResponse(profile, null);
+    }
+
+    // ── Request → Entity ──────────────────────────────────────
+
+    /**
+     * Maps a CandidateProfileRequest to a new CandidateProfile entity.
+     * Does NOT set the user association or skill entities — those are handled
+     * by CandidateService after the entity is built.
+     *
+     * @param request  validated request DTO from the controller
+     * @return unpersisted CandidateProfile entity
+     */
+    public CandidateProfile toEntity(CandidateProfileRequest request) {
+        CandidateProfile profile = new CandidateProfile();
+        applyRequestToEntity(profile, request);
+        return profile;
+    }
+
+    /**
+     * Merges a CandidateProfileRequest into an existing CandidateProfile entity.
+     * Used by the update endpoint — only overwrites non-null fields.
+     *
+     * @param profile  the existing entity to update
+     * @param request  the update request
+     */
+    public void updateEntity(CandidateProfile profile, CandidateProfileRequest request) {
+        applyRequestToEntity(profile, request);
+    }
+
+    // ── Private Helpers ───────────────────────────────────────
+
+    private void applyRequestToEntity(CandidateProfile profile, CandidateProfileRequest req) {
+        profile.setFullName(req.getFullName());
+        profile.setGender(req.getGender());
+        if (req.getDob() != null && !req.getDob().isBlank()) {
+            profile.setDob(java.time.LocalDate.parse(req.getDob()));
+        }
+        profile.setCurrentLocation(req.getCurrentLocation());
+        profile.setPreferredLocation(req.getPreferredLocation());
+        profile.setLinkedinUrl(req.getLinkedinUrl());
+        profile.setGithubUrl(req.getGithubUrl());
+        profile.setAbout(req.getAbout());
+        // Employment
+        profile.setEmployed(req.isEmployed());
+        profile.setCurrentCompany(req.getCurrentCompany());
+        profile.setCurrentRole(req.getCurrentRole());
+        profile.setExperienceYears(req.getExperienceYears());
+        profile.setExperienceMonths(req.getExperienceMonths());
+        profile.setCurrentCtc(req.getCurrentCtc());
+        profile.setExpectedCtc(req.getExpectedCtc());
+        profile.setNoticePeriod(req.getNoticePeriod());
+        // Fresher
+        profile.setHighestQualification(req.getHighestQualification());
+        profile.setFieldOfStudy(req.getFieldOfStudy());
+        profile.setCollegeName(req.getCollegeName());
+        profile.setPassingYear(req.getPassingYear());
+        profile.setInternshipExperience(req.getInternshipExperience());
+        profile.setDreamCompany(req.getDreamCompany());
+        // Preferences
+        profile.setPreferredJobTypes(req.getPreferredJobTypes());
+        profile.setPreferredIndustry(req.getPreferredIndustry());
+        profile.setWillingToRelocate(req.isWillingToRelocate());
+        profile.setPreferredJobRole(req.getPreferredJobRole());
+    }
+
+    private List<CandidateCardResponse.SkillTag> mapSkillTags(List<CandidateSkill> candidateSkills) {
+        if (candidateSkills == null) return List.of();
+        return candidateSkills.stream()
+                .map(cs -> CandidateCardResponse.SkillTag.builder()
+                        .skillId(cs.getSkill() != null ? cs.getSkill().getId() : null)
+                        .name(cs.getSkill() != null ? cs.getSkill().getName() : null)
+                        .category(cs.getSkill() != null ? cs.getSkill().getCategory() : null)
+                        .proficiency(cs.getProficiency())
+                        .aiExtracted(cs.isAiExtracted())
+                        .build())
+                .toList();
+    }
+
+    private String formatExperience(Integer years, Integer months) {
+        if ((years == null || years == 0) && (months == null || months == 0)) return "Fresher";
+        StringBuilder sb = new StringBuilder();
+        if (years != null && years > 0) sb.append(years).append("y ");
+        if (months != null && months > 0) sb.append(months).append("m");
+        return sb.toString().trim();
+    }
+}

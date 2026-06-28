@@ -1,0 +1,55 @@
+package com.superflick.modules.chat;
+
+import com.superflick.modules.chat.dto.SendMessageRequest;
+import com.superflick.modules.chat.entity.Message;
+import com.superflick.modules.chat.mapper.MessageMapper;
+import com.superflick.modules.match.entity.Match;
+import com.superflick.modules.match.repository.MatchRepository;
+import com.superflick.shared.exception.ForbiddenException;
+import com.superflick.shared.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
+
+import java.security.Principal;
+import java.util.UUID;
+
+@Controller
+@RequiredArgsConstructor
+public class ChatWebSocketController {
+
+    private final ChatService chatService;
+    private final MatchRepository matchRepo;
+    private final SimpMessagingTemplate messagingTemplate;
+
+    @MessageMapping("/chat.send/{matchId}")
+    public void sendMessage(@DestinationVariable UUID matchId,
+                            @Payload SendMessageRequest req,
+                            Principal principal) {
+        UUID senderId = UUID.fromString(principal.getName());
+
+        // Validate sender is participant in this match
+        Match match = matchRepo.findById(matchId)
+                .orElseThrow(() -> new NotFoundException("Match not found"));
+
+        if (!match.getCandidateUserId().equals(senderId)
+                && !match.getHrUserId().equals(senderId)) {
+            throw new ForbiddenException("Not a participant in this match");
+        }
+
+        Message saved = chatService.saveMessage(matchId, senderId, req.getContent());
+
+        // Broadcast to both participants
+        UUID recipientId = senderId.equals(match.getCandidateUserId())
+                ? match.getHrUserId() : match.getCandidateUserId();
+
+        messagingTemplate.convertAndSendToUser(
+                recipientId.toString(),
+                "/queue/messages",
+                MessageMapper.toResponse(saved)
+        );
+    }
+}

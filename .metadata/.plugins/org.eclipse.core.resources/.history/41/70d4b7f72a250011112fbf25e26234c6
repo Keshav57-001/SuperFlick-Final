@@ -1,0 +1,75 @@
+package com.superflick.modules.hr;
+
+import com.stripe.service.FileService;
+import com.superflick.modules.hr.dto.HRProfileRequest;
+import com.superflick.modules.hr.dto.HRProfileResponse;
+import com.superflick.modules.hr.entity.Company;
+import com.superflick.modules.hr.entity.HRProfile;
+import com.superflick.modules.hr.mapper.HRProfileMapper;
+import com.superflick.modules.hr.repository.CompanyRepository;
+import com.superflick.modules.hr.repository.HRRepository;
+import com.superflick.modules.user.entity.User;
+import com.superflick.modules.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class HRService {
+
+    private final HRRepository hrRepo;
+    private final CompanyRepository companyRepo;
+    private final FileService fileService;
+    private final UserRepository userRepo;
+
+    public HRProfileResponse createProfile(User user, HRProfileRequest req) {
+        Company company = Company.builder()
+                .name(req.getCompanyName())
+                .website(req.getCompanyWebsite())
+                .industry(req.getIndustry())
+                .size(req.getCompanySize())
+                .location(req.getCompanyLocation())
+                .description(req.getCompanyDescription())
+                .build();
+        companyRepo.save(company);
+
+        HRProfile hr = HRProfile.builder()
+                .user(user)
+                .fullName(req.getFullName())
+                .designation(req.getDesignation())
+                .company(company)
+                .hiringDepartment(req.getHiringDepartment())
+                .hiringRoles(req.getHiringRoles())
+                .expectedHiringVolume(req.getExpectedHiringVolume())
+                .build();
+        hrRepo.save(hr);
+
+        user.setProfileComplete(true);
+        userRepo.save(user);
+
+        return HRProfileMapper.toResponse(hr);
+    }
+
+    public String uploadCompanyLogo(UUID userId, MultipartFile file) {
+        HRProfile hr = hrRepo.findByUserId(userId).orElseThrow();
+        String url = fileService.uploadFile(file, "logos/");
+        hr.getCompany().setLogoUrl(url);
+        companyRepo.save(hr.getCompany());
+        return url;
+    }
+
+    public HRProfileResponse getProfile(UUID userId) {
+        return HRProfileMapper.toResponse(hrRepo.findByUserId(userId).orElseThrow());
+    }
+
+    public HRProfileResponse updateProfile(UUID userId, HRProfileRequest req) {
+        HRProfile hr = hrRepo.findByUserId(userId).orElseThrow();
+        HRProfileMapper.updateEntity(hr, req);
+        return HRProfileMapper.toResponse(hrRepo.save(hr));
+    }
+}

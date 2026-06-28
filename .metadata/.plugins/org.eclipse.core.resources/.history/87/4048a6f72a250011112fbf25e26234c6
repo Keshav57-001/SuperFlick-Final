@@ -1,0 +1,98 @@
+package com.superflick.modules.ai;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.superflick.modules.candidate.entity.CandidateProfile;
+import com.superflick.modules.candidate.entity.CandidateSkill;
+import com.superflick.modules.candidate.repository.CandidateRepository;
+import com.superflick.modules.skill.repository.SkillRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+public class ResumeParserService {
+
+    @Value("${openai.api.key}")
+    private String openAiKey;
+
+    private final CandidateRepository candidateRepo;
+    private final SkillRepository skillRepo;
+    private final RestTemplate restTemplate;
+
+    @Async
+    public void extractAndSaveSkills(UUID userId, String resumeUrl) {
+        String resumeText = downloadAndExtractText(resumeUrl);
+
+        String prompt = """
+            Extract a list of technical skills from the following resume text.
+            Return only a JSON array of skill names, e.g. ["Java","Spring Boot","SQL"].
+            Resume:
+            """ + resumeText;
+
+        String response = callOpenAI(prompt);
+        List<String> skillNames = parseSkillNames(response);
+
+        CandidateProfile candidate = candidateRepo.findByUserId(userId).orElseThrow();
+
+        skillNames.forEach(name -> {
+            skillRepo.findByNameIgnoreCase(name).ifPresent(skill -> {
+                boolean alreadyHas = candidate.getSkills().stream()
+                        .anyMatch(cs -> cs.getSkill().getId().equals(skill.getId()));
+                if (!alreadyHas) {
+                    candidate.getSkills().add(CandidateSkill.builder()
+                            .candidate(candidate)
+                            .skill(skill)
+                            .isAiExtracted(true)
+                            .build());
+                }
+            });
+        });
+        candidateRepo.save(candidate);
+    }
+
+    private String callOpenAI(String prompt) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + openAiKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, Object> body = Map.of(
+                "model", "gpt-4o-mini",
+                "messages", List.of(Map.of("role", "user", "content", prompt)),
+                "max_tokens", 300
+        );
+
+        ResponseEntity<Map> response = restTemplate.postForEntity(
+                "https://api.openai.com/v1/chat/completions",
+                new HttpEntity<>(body, headers), Map.class);
+
+        // Parse response
+        List<Map<String, Object>> choices = (List) response.getBody().get("choices");
+        return (String) ((Map) choices.get(0).get("message")).get("content");
+    }
+
+    private String downloadAndExtractText(String url) {
+        // Use Apache PDFBox or iText to extract text from PDF URL
+        // Simplified here
+        return ""; // TODO: implement PDF text extraction
+    }
+
+    private List<String> parseSkillNames(String json) {
+        try {
+            return new ObjectMapper().readValue(json, new TypeReference<List<String>>(){});
+        } catch (Exception e) {
+            return List.of();
+        }
+    }
+}

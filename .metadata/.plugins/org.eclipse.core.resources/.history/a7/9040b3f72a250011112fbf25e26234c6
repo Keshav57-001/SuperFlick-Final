@@ -1,0 +1,101 @@
+package com.superflick.modules.notification;
+
+import com.superflick.modules.notification.dto.NotificationResponse;
+import com.superflick.modules.notification.entity.Notification;
+import com.superflick.modules.notification.mapper.NotificationMapper;
+import com.superflick.modules.notification.repository.NotificationRepository;
+import com.superflick.shared.enums.NotificationType;
+import com.superflick.shared.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
+import java.util.UUID;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class NotificationService {
+
+    private final NotificationRepository notifRepo;
+    private final NotificationMapper     notifMapper;
+    private final SimpMessagingTemplate  messagingTemplate;
+    private final EmailService           emailService;
+
+    // ── Domain Events ─────────────────────────────────────────
+
+    public void sendMatchNotification(UUID candidateUserId, UUID hrUserId, UUID jobId) {
+        String msg = "You matched! Chat is now available.";
+        persist(candidateUserId, NotificationType.MATCH, msg);
+        persist(hrUserId,        NotificationType.MATCH, msg);
+        pushRealtime(candidateUserId, msg);
+        pushRealtime(hrUserId,        msg);
+    }
+
+    public void sendAutoApplyNotification(UUID candidateUserId, String jobTitle, String company) {
+        String msg = "SuperFlick AutoApply applied you to " + company
+                + " – " + jobTitle + " because your skills matched.";
+        persist(candidateUserId, NotificationType.AUTO_APPLY, msg);
+        pushRealtime(candidateUserId, msg);
+        emailService.sendAutoApplyAlert(candidateUserId, msg);
+    }
+
+    public void sendPaymentSuccessNotification(UUID userId, String plan) {
+        String msg = "Premium activated! Your " + plan + " plan is now live.";
+        persist(userId, NotificationType.PAYMENT, msg);
+        pushRealtime(userId, msg);
+    }
+
+    // ── Read Operations ───────────────────────────────────────
+
+    @Transactional(readOnly = true)
+    public Page<NotificationResponse> getForUser(UUID userId, Pageable pageable) {
+        return notifRepo.findByUserIdOrderByCreatedAtDesc(userId, pageable)
+                .map(notifMapper::toResponse);
+    }
+
+    @Transactional(readOnly = true)
+    public long getUnreadCount(UUID userId) {
+        return notifRepo.countByUserIdAndIsReadFalse(userId);
+    }
+
+    public void markRead(UUID userId, UUID notifId) {
+        Notification notif = notifRepo.findById(notifId)
+                .orElseThrow(() -> new NotFoundException("Notification not found"));
+        if (!notif.getUserId().equals(userId)) return; // ignore cross-user attempts
+        notif.setRead(true);
+        notifRepo.save(notif);
+    }
+
+    public void markAllRead(UUID userId) {
+        notifRepo.markAllReadForUser(userId);
+    }
+
+    // ── Private Helpers ───────────────────────────────────────
+
+    private void persist(UUID userId, NotificationType type, String message) {
+        notifRepo.save(Notification.builder()
+                .userId(userId)
+                .type(type)
+                .message(message)
+                .read(false)
+                .build());
+    }
+
+    private void pushRealtime(UUID userId, String message) {
+        try {
+            messagingTemplate.convertAndSendToUser(
+                    userId.toString(), "/queue/notifications",
+                    Map.of("message", message));
+        } catch (Exception ex) {
+            log.warn("WebSocket push failed for userId={}: {}", userId, ex.getMessage());
+        }
+    }
+}

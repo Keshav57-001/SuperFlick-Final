@@ -1,0 +1,171 @@
+package com.superflick.modules.ai;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.superflick.modules.ai.dto.ExtractedSkills;
+import com.superflick.modules.candidate.entity.CandidateProfile;
+import com.superflick.modules.candidate.entity.CandidateSkill;
+import com.superflick.modules.candidate.repository.CandidateRepository;
+import com.superflick.modules.skill.entity.Skill;
+import com.superflick.modules.skill.repository.SkillRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
+
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class AIService {
+
+    private final CandidateRepository candidateRepo;
+    private final SkillRepository     skillRepo;
+    private final RestTemplate        restTemplate;
+    private final ObjectMapper        objectMapper;
+
+    @Value("${openai.api.key:}")
+    private String openAiKey;
+
+    private static final String OPENAI_URL = "https://api.openai.com/v1/chat/completions";
+    private static final String MODEL      = "gpt-4o-mini";
+
+    // ── Public API ────────────────────────────────────────────
+
+    @Async
+    @Transactional
+    public void extractAndSaveSkillsFromResume(UUID userId, String resumeUrl) {
+        log.info("AI skill extraction started: userId={}", userId);
+        try {
+            String text = extractTextFromPdf(resumeUrl);
+            if (text == null || text.isBlank()) {
+                log.warn("No text extracted from resume: userId={}", userId);
+                return;
+            }
+            List<String> rawNames = callOpenAiForSkills(text);
+            matchAndPersistSkills(userId, rawNames, text);
+            log.info("AI skill extraction complete: userId={}", userId);
+        } catch (Exception ex) {
+            log.error("AI skill extraction failed for userId={}: {}", userId, ex.getMessage(), ex);
+        }
+    }
+
+    public ExtractedSkills extractSkillsFromText(String text) {
+        try {
+            List<String> rawNames = callOpenAiForSkills(text);
+            return buildDto(rawNames, text);
+        } catch (Exception ex) {
+            log.error("Text skill extraction failed: {}", ex.getMessage());
+            return ExtractedSkills.builder()
+                    .skillNames(List.of()).totalFound(0).totalMatched(0)
+                    .unmatchedSkillNames(List.of()).extractedFromText(text).build();
+        }
+    }
+
+    // ── Private helpers ───────────────────────────────────────
+
+    /**
+     * PDFBox 3.x uses Loader.loadPDF(byte[]) instead of PDDocument.load(InputStream).
+     * The old API (PDDocument.load) was removed in 3.0.
+     */
+    private String extractTextFromPdf(String pdfUrl) {
+        try {
+            byte[] bytes;
+            try (InputStream is = new URL(pdfUrl).openStream()) {
+                bytes = is.readAllBytes();
+            }
+            try (PDDocument doc = Loader.loadPDF(bytes)) {
+                return new PDFTextStripper().getText(doc);
+            }
+        } catch (Exception ex) {
+            log.error("PDF extraction failed for url={}: {}", pdfUrl, ex.getMessage());
+            return null;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<String> callOpenAiForSkills(String text) throws Exception {
+        if (openAiKey == null || openAiKey.isBlank()) {
+            log.info("[DEV] OpenAI key not set — returning empty skill list");
+            return List.of();
+        }
+
+        String truncated = text.length() > 8000 ? text.substring(0, 8000) : text;
+        String prompt = """
+                Extract all technical skills from this resume text.
+                Return ONLY a valid JSON array of strings. No explanation, no markdown.
+                Example: ["Java","Spring Boot","Docker"]
+                Resume:
+                """ + truncated;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(openAiKey);
+
+        Map<String, Object> body = Map.of(
+                "model",       MODEL,
+                "max_tokens",  500,
+                "temperature", 0.1,
+                "messages", List.of(Map.of("role", "user", "content", prompt))
+        );
+
+        ResponseEntity<Map> response = restTemplate.postForEntity(
+                OPENAI_URL, new HttpEntity<>(body, headers), Map.class);
+
+        List<Map<String, Object>> choices = (List<Map<String, Object>>) response.getBody().get("choices");
+        String content = (String) ((Map<String, Object>) choices.get(0).get("message")).get("content");
+        String cleaned = content.trim()
+                .replaceAll("^```json", "").replaceAll("^```", "").replaceAll("```$", "").trim();
+        return objectMapper.readValue(cleaned, new TypeReference<>() {});
+    }
+
+    @Transactional
+    private ExtractedSkills matchAndPersistSkills(UUID userId, List<String> rawNames, String text) {
+        CandidateProfile cp = candidateRepo.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Candidate not found: " + userId));
+        List<String> matched   = new ArrayList<>();
+        List<String> unmatched = new ArrayList<>();
+        for (String name : rawNames) {
+            Optional<Skill> opt = skillRepo.findByNameIgnoreCase(name.trim());
+            if (opt.isPresent()) {
+                Skill s = opt.get();
+                boolean exists = cp.getSkills().stream()
+                        .anyMatch(cs -> cs.getSkill().getId().equals(s.getId()));
+                if (!exists) {
+                    cp.getSkills().add(CandidateSkill.builder()
+                            .candidate(cp).skill(s)
+                            .proficiency("INTERMEDIATE").aiExtracted(true).build());
+                }
+                matched.add(name);
+            } else {
+                unmatched.add(name);
+            }
+        }
+        candidateRepo.save(cp);
+        return buildDto(matched, text);
+    }
+
+    private ExtractedSkills buildDto(List<String> matched, String text) {
+        return ExtractedSkills.builder()
+                .skillNames(matched).totalFound(matched.size())
+                .totalMatched(matched.size()).unmatchedSkillNames(List.of())
+                .extractedFromText(text).build();
+    }
+}

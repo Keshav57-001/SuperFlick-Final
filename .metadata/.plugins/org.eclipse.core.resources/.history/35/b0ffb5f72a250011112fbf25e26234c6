@@ -1,0 +1,58 @@
+package com.superflick.modules.match;
+
+import com.superflick.modules.match.dto.MatchResponse;
+import com.superflick.modules.match.dto.MatchWithLastMessageResponse;
+import com.superflick.modules.user.entity.User;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/api/v1/matches")
+@RequiredArgsConstructor
+@Tag(name = "Matches", description = "Bi-directional match management and chat list")
+public class MatchController {
+
+    private final MatchService matchService;
+
+    /**
+     * GET /api/v1/matches
+     * Returns all matches for the authenticated user (candidate or HR).
+     */
+    @GetMapping
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Get all my matches")
+    public ResponseEntity<List<MatchResponse>> getMyMatches(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(matchService.getMatchesForUser(user.getId()));
+    }
+
+    /**
+     * GET /api/v1/matches/chats
+     * Returns matches with last message and unread count — used to build the chat list UI.
+     */
+    @GetMapping("/chats")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Get chat list with last message preview")
+    public ResponseEntity<List<MatchWithLastMessageResponse>> getChatList(
+            @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(matchService.getChatListForUser(user.getId()));
+    }
+
+    /**
+     * GET /api/v1/matches/{matchId}
+     * Returns a single match detail. Both participants can access.
+     */
+    @GetMapping("/{matchId}")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Get a specific match")
+    public ResponseEntity<MatchResponse> getMatch(@AuthenticationPrincipal User user,
+                                                  @PathVariable UUID matchId) {
+        return ResponseEntity.ok(matchService.getMatch(user.getId(), matchId));
+    }
+}

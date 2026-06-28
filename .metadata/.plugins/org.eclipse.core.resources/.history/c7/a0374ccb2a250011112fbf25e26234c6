@@ -1,0 +1,251 @@
+package com.superflick.modules.ai;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.superflick.modules.ai.dto.ExtractedSkills;
+import com.superflick.modules.candidate.entity.CandidateProfile;
+import com.superflick.modules.candidate.entity.CandidateSkill;
+import com.superflick.modules.candidate.repository.CandidateRepository;
+import com.superflick.modules.skill.entity.Skill;
+import com.superflick.modules.skill.repository.SkillRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
+
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class AIService {
+
+    private final CandidateRepository candidateRepo;
+    private final SkillRepository skillRepo;
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+
+    @Value("${openai.api.key}")
+    private String openAiKey;
+
+    private static final String OPENAI_URL = "https://api.openai.com/v1/chat/completions";
+    private static final String MODEL = "gpt-4o-mini";
+
+    // ── Public API ────────────────────────────────────────────
+
+    /**
+     * Asynchronously parses a resume PDF from its S3 URL, extracts skills via
+     * OpenAI, and persists them as CandidateSkill records marked isAiExtracted=true.
+     * Called after a candidate uploads their resume.
+     *
+     * @param userId    the candidate's user ID
+     * @param resumeUrl public S3 URL of the uploaded resume PDF
+     */
+    @Async
+    @Transactional
+    public void extractAndSaveSkillsFromResume(UUID userId, String resumeUrl) {
+        log.info("Starting AI skill extraction for user={} resumeUrl={}", userId, resumeUrl);
+
+        try {
+            // 1. Download and parse PDF text
+            String resumeText = extractTextFromPdf(resumeUrl);
+            if (resumeText == null || resumeText.isBlank()) {
+                log.warn("Could not extract text from resume for user={}", userId);
+                return;
+            }
+
+            // 2. Send to OpenAI for skill extraction
+            List<String> rawSkillNames = callOpenAiForSkills(resumeText);
+            log.info("OpenAI extracted {} raw skills for user={}", rawSkillNames.size(), userId);
+
+            // 3. Match against skills master table and persist
+            ExtractedSkills result = matchAndPersistSkills(userId, rawSkillNames, resumeText);
+            log.info("Skill extraction complete for user={}. matched={} unmatched={}",
+                    userId, result.getTotalMatched(), result.getUnmatchedSkillNames().size());
+
+        } catch (Exception ex) {
+            log.error("AI skill extraction failed for user={}: {}", userId, ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Synchronously extracts skills from a plain-text snippet (e.g. from a
+     * textarea). Returns the ExtractedSkills result without saving.
+     * Useful for live resume score preview on the frontend.
+     *
+     * @param text raw text to analyse
+     * @return ExtractedSkills DTO with matched and unmatched skill names
+     */
+    public ExtractedSkills extractSkillsFromText(String text) {
+        try {
+            List<String> rawSkillNames = callOpenAiForSkills(text);
+            return buildExtractedSkillsDto(rawSkillNames, text);
+        } catch (Exception ex) {
+            log.error("AI text skill extraction failed: {}", ex.getMessage(), ex);
+            return ExtractedSkills.builder()
+                    .skillNames(List.of())
+                    .totalFound(0)
+                    .totalMatched(0)
+                    .unmatchedSkillNames(List.of())
+                    .extractedFromText(text)
+                    .build();
+        }
+    }
+
+    // ── Private Helpers ───────────────────────────────────────
+
+    /**
+     * Downloads a PDF from a URL and extracts all text using Apache PDFBox.
+     */
+    private String extractTextFromPdf(String pdfUrl) {
+        try (InputStream inputStream = new URL(pdfUrl).openStream();
+             PDDocument document = PDDocument.load(inputStream)) {
+            PDFTextStripper stripper = new PDFTextStripper();
+            return stripper.getText(document);
+        } catch (Exception ex) {
+            log.error("PDF text extraction failed for url={}: {}", pdfUrl, ex.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Calls the OpenAI Chat Completions API with a structured prompt.
+     * Asks the model to respond with a pure JSON array of skill names only.
+     *
+     * @param text resume or any text to analyse
+     * @return list of raw skill name strings returned by the model
+     */
+    @SuppressWarnings("unchecked")
+    private List<String> callOpenAiForSkills(String text) throws JsonProcessingException {
+        // Truncate to ~6000 tokens to stay within context limits
+        String truncated = text.length() > 8000 ? text.substring(0, 8000) : text;
+
+        String prompt = """
+                You are a technical recruiter assistant. Carefully read the following resume text
+                and extract all technical skills, programming languages, frameworks, tools, platforms,
+                and technologies mentioned.
+                
+                Rules:
+                - Return ONLY a valid JSON array of strings. No explanation, no markdown, no backticks.
+                - Each item must be the exact skill name as it appears in the text.
+                - Do NOT include soft skills like "communication" or "teamwork".
+                - Deduplicate — each skill should appear once.
+                - Example output: ["Java", "Spring Boot", "Docker", "AWS", "PostgreSQL"]
+                
+                Resume text:
+                %s
+                """.formatted(truncated);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(openAiKey);
+
+        Map<String, Object> requestBody = Map.of(
+                "model", MODEL,
+                "max_tokens", 500,
+                "temperature", 0.1, // low temperature for deterministic extraction
+                "messages", List.of(Map.of("role", "user", "content", prompt))
+        );
+
+        ResponseEntity<Map> response = restTemplate.postForEntity(
+                OPENAI_URL,
+                new HttpEntity<>(requestBody, headers),
+                Map.class
+        );
+
+        // Parse: data.choices[0].message.content
+        List<Map<String, Object>> choices = (List<Map<String, Object>>) response.getBody().get("choices");
+        String content = (String) ((Map<String, Object>) choices.get(0).get("message")).get("content");
+
+        // Clean up in case the model adds any stray markdown
+        String cleaned = content.trim()
+                .replaceAll("^```json", "")
+                .replaceAll("^```", "")
+                .replaceAll("```$", "")
+                .trim();
+
+        return objectMapper.readValue(cleaned, new TypeReference<List<String>>() {});
+    }
+
+    /**
+     * Matches extracted skill names against the skills table and persists new
+     * CandidateSkill records for any that don't already exist.
+     */
+    @Transactional
+    private ExtractedSkills matchAndPersistSkills(UUID userId, List<String> rawSkillNames,
+                                                  String sourceText) {
+        CandidateProfile candidate = candidateRepo.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Candidate not found for userId=" + userId));
+
+        List<String> matched = new ArrayList<>();
+        List<String> unmatched = new ArrayList<>();
+
+        for (String rawName : rawSkillNames) {
+            Optional<Skill> skillOpt = skillRepo.findByNameIgnoreCase(rawName.trim());
+            if (skillOpt.isPresent()) {
+                Skill skill = skillOpt.get();
+                boolean alreadyLinked = candidate.getSkills().stream()
+                        .anyMatch(cs -> cs.getSkill().getId().equals(skill.getId()));
+
+                if (!alreadyLinked) {
+                    CandidateSkill cs = CandidateSkill.builder()
+                            .candidate(candidate)
+                            .skill(skill)
+                            .proficiency("INTERMEDIATE")
+                            .isAiExtracted(true)
+                            .build();
+                    candidate.getSkills().add(cs);
+                }
+                matched.add(rawName);
+            } else {
+                unmatched.add(rawName);
+            }
+        }
+
+        candidateRepo.save(candidate);
+
+        return ExtractedSkills.builder()
+                .skillNames(matched)
+                .totalFound(rawSkillNames.size())
+                .totalMatched(matched.size())
+                .unmatchedSkillNames(unmatched)
+                .extractedFromText(sourceText)
+                .build();
+    }
+
+    /**
+     * Builds an ExtractedSkills DTO from raw skill names without persisting.
+     * Used for synchronous preview calls.
+     */
+    private ExtractedSkills buildExtractedSkillsDto(List<String> rawSkillNames, String text) {
+        List<String> matched = new ArrayList<>();
+        List<String> unmatched = new ArrayList<>();
+        for (String name : rawSkillNames) {
+            if (skillRepo.findByNameIgnoreCase(name.trim()).isPresent()) matched.add(name);
+            else unmatched.add(name);
+        }
+        return ExtractedSkills.builder()
+                .skillNames(matched)
+                .totalFound(rawSkillNames.size())
+                .totalMatched(matched.size())
+                .unmatchedSkillNames(unmatched)
+                .extractedFromText(text)
+                .build();
+    }
+}

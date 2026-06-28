@@ -1,0 +1,45 @@
+package com.superflick.modules.job;
+
+import com.superflick.modules.candidate.entity.CandidateProfile;
+import com.superflick.modules.candidate.repository.CandidateRepository;
+import com.superflick.modules.job.dto.JobResponse;
+import com.superflick.modules.job.entity.Job;
+import com.superflick.modules.job.mapper.JobMapper;
+import com.superflick.modules.job.repository.JobRepository;
+import com.superflick.modules.swipe.repository.SwipeRepository;
+import com.superflick.shared.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+public class JobFeedService {
+
+    private final JobRepository jobRepo;
+    private final CandidateRepository candidateRepo;
+    private final SwipeRepository swipeRepo;
+
+    public JobResponse getNextJobForCandidate(UUID userId) {
+        CandidateProfile candidate = candidateRepo.findByUserId(userId).orElseThrow();
+
+        // IDs the candidate has already swiped on
+        Set<UUID> swipedJobIds = swipeRepo.findSwipedJobIdsByCandidate(userId);
+
+        // Boosted jobs first, then matching location/skills, exclude already swiped
+        List<Job> candidates = jobRepo.findFeedForCandidate(
+                candidate.getPreferredLocation(),
+                candidate.getExperienceYears(),
+                swipedJobIds,
+                PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "isBoosted", "createdAt"))
+        );
+
+        if (candidates.isEmpty()) throw new NotFoundException("No more jobs available");
+        return JobMapper.toResponse(candidates.get(0));
+    }
+}

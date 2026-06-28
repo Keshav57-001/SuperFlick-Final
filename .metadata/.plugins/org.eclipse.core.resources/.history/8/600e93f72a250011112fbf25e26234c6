@@ -1,0 +1,79 @@
+package com.superflick.modules.payment;
+
+import com.superflick.modules.notification.NotificationService;
+import com.superflick.modules.payment.dto.CreateOrderRequest;
+import com.superflick.modules.payment.dto.OrderResponse;
+import com.superflick.modules.payment.dto.PaymentResponse;
+import com.superflick.modules.payment.dto.WebhookPayload;
+import com.superflick.modules.payment.entity.Payment;
+import com.superflick.modules.payment.gateway.RazorpayService;
+import com.superflick.modules.payment.mapper.PaymentMapper;
+import com.superflick.modules.payment.repository.PaymentRepository;
+import com.superflick.modules.subscription.SubscriptionService;
+import com.superflick.modules.user.entity.User;
+import com.superflick.shared.enums.PaymentGateway;
+import com.superflick.shared.enums.PaymentStatus;
+import com.superflick.shared.enums.SubscriptionPlan;
+import com.superflick.shared.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class PaymentService {
+
+    private final RazorpayService razorpayService;
+    private final PaymentRepository paymentRepo;
+    private final SubscriptionService subscriptionService;
+    private final NotificationService notificationService;
+
+    public OrderResponse createOrder(User user, CreateOrderRequest req) {
+        // Create order on Razorpay
+        String orderId = razorpayService.createOrder(req.getAmount(), "INR");
+
+        // Persist pending payment record
+        Payment payment = Payment.builder()
+                .userId(user.getId())
+                .plan(SubscriptionPlan.valueOf(req.getPlan()))
+                .amount(req.getAmount())
+                .gateway(PaymentGateway.RAZORPAY)
+                .gatewayOrderId(orderId)
+                .status(PaymentStatus.PENDING)
+                .createdAt(LocalDateTime.now())
+                .build();
+        paymentRepo.save(payment);
+
+        return new OrderResponse(orderId, req.getAmount());
+    }
+
+    public void handleRazorpayWebhook(String payload, String signature) {
+        // Verify HMAC signature
+        razorpayService.verifySignature(payload, signature);
+
+        WebhookPayload webhook = parseWebhook(payload);
+        if (!"payment.captured".equals(webhook.getEvent())) return;
+
+        Payment payment = paymentRepo.findByGatewayOrderId(webhook.getOrderId())
+                .orElseThrow(() -> new NotFoundException("Payment not found"));
+        payment.setStatus(PaymentStatus.SUCCESS);
+        payment.setGatewayPaymentId(webhook.getPaymentId());
+        paymentRepo.save(payment);
+
+        // Activate subscription
+        subscriptionService.activateSubscription(payment.getUserId(), payment.getPlan());
+        notificationService.sendPaymentSuccessNotification(
+                payment.getUserId(), payment.getPlan().name());
+    }
+
+    public List<PaymentResponse> getPaymentHistory(UUID userId) {
+        return paymentRepo.findByUserIdOrderByCreatedAtDesc(userId)
+                .stream().map(PaymentMapper::toResponse).collect(Collectors.toList());
+    }
+}
