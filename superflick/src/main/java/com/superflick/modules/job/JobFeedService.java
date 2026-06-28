@@ -99,6 +99,7 @@ public class JobFeedService {
         if (value == null) return BigDecimal.ZERO;
         if (value instanceof BigDecimal) return (BigDecimal) value;
         if (value instanceof Number) return new BigDecimal(((Number) value).toString());
+        System.out.println("Hello World");
         return BigDecimal.ZERO;
     }
 }
